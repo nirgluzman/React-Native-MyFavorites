@@ -63,6 +63,10 @@ https://docs.expo.dev/versions/latest/sdk/imagepicker/
 - A library that provides access to the system's UI for selecting images and videos from the phone's
   library or taking a photo with the camera.
 
+- `ImagePicker` requires permissions to pick images from the gallery and to capture new images from
+  the camera. We need to add these permissions to `app.json`.
+  https://docs.expo.dev/versions/latest/sdk/imagepicker/#configuration-in-appjsonappconfigjs
+
 ### Difference between ScrollView and FlatList
 
 https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
