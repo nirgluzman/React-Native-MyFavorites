@@ -46,3 +46,18 @@ https://docs.expo.dev/guides/environment-variables/
 
 - Do not store sensitive info, such as private keys, in `EXPO_PUBLIC_` variables. These variables
   will be visible in plain-text in your compiled application.
+
+### Difference between ScrollView and FlatList
+
+https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
+
+- In React Native, both ScrollView and FlatList are components used for displaying a scrollable list
+  of items, but they have different use cases and benefits.
+
+- `ScrollView` is a general-purpose component for scrolling. It’s suitable when you have a small,
+  finite list of items that you want to display on a screen. It’s not ideal for very long lists or
+  dynamic data, as it renders all the items at once.
+
+- `FlatList` is specifically designed for efficiently rendering long lists of data. It’s a more
+  performant option for large datasets or dynamic content. It only renders the items that are
+  currently visible on the screen, making it more memory-efficient.
