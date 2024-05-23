@@ -47,6 +47,22 @@ https://docs.expo.dev/guides/environment-variables/
 - Do not store sensitive info, such as private keys, in `EXPO_PUBLIC_` variables. These variables
   will be visible in plain-text in your compiled application.
 
+### Expo Camera -> comprehensive camera manegement package
+
+https://docs.expo.dev/versions/latest/sdk/camera/
+
+- `expo-camera` provides a React component that renders a preview of the device's front or back
+  camera.
+
+- Using `CameraView`, you can take photos and record videos that are saved to the app's cache.
+
+### Expo ImagePicker
+
+https://docs.expo.dev/versions/latest/sdk/imagepicker/
+
+- A library that provides access to the system's UI for selecting images and videos from the phone's
+  library or taking a photo with the camera.
+
 ### Difference between ScrollView and FlatList
 
 https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
