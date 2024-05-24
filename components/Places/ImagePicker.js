@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.primary100,
-    borderRadius: 4
+    borderRadius: 4,
+    overflow: 'hidden' // hide the image if it is larger than the container.
   },
 
   image: {
