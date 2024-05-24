@@ -1,4 +1,5 @@
-import { Alert, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 
 import {
   getCurrentPositionAsync, // requests for one-time delivery of the user's current location.
@@ -9,9 +10,13 @@ import {
 
 import OutlinedButton from '../UI/OutlinedButton';
 
+import { getMapPreview } from '../../util/location'; // helper function to generate a URL for a static Google Maps image
+
 import { Colors } from '../../constants/colors'; // color palette
 
 export default function LocationPicker() {
+  const [pickedLocation, setPickedLocation] = useState(null);
+
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 
   async function verifyPermissions() {
@@ -49,15 +54,30 @@ export default function LocationPicker() {
     const location = await getCurrentPositionAsync({
       accuracy: Accuracy.Highest // the accuracy of the location, https://docs.expo.dev/versions/latest/sdk/location/#accuracy
     });
-    console.log(location);
+
+    setPickedLocation({
+      lat: location.coords.latitude, // latitude
+      lng: location.coords.longitude // longitude
+    });
   }
 
   // allow the user to pick a location on the map.
   function pickOnMapHandler() {}
 
+  let locationPreview = <Text>No location picked yet</Text>;
+
+  if (pickedLocation) {
+    locationPreview = (
+      <Image
+        style={styles.image} // we must set width & height in order to show the image.
+        source={{ uri: getMapPreview(pickedLocation.lat, pickedLocation.lng) }} // image source (either a remote URL or a local file resource).
+      />
+    );
+  }
+
   return (
     <View>
-      <View style={styles.mapPreview}></View>
+      <View style={styles.mapPreview}>{locationPreview}</View>
 
       <View style={styles.actions}>
         <OutlinedButton icon='location' onPress={getLocationHandler}>
@@ -80,12 +100,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.primary100,
-    borderRadius: 4
+    borderRadius: 4,
+    overflow: 'hidden' // hide the image if it is larger than the container.
   },
 
   actions: {
     flexDirection: 'row', // place the two buttons side by side.
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+
+  image: {
+    width: '100%',
+    height: '100%'
+    // borderRadius: 4
   }
 });
