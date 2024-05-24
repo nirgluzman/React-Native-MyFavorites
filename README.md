@@ -1,8 +1,8 @@
-## React Native - User AuthN
+## React Native - My-Favorites
 
 ### GitHub repo
 
-- https://github.com/nirgluzman/React-Native-MyFavourites.git
+- https://github.com/nirgluzman/React-Native-MyFavorites.git
 
 - https://github.com/academind/react-native-practical-guide-code.git (course)
 
@@ -75,6 +75,16 @@ https://docs.expo.dev/versions/latest/sdk/location/
   subscribing location update events from the device.
 
 - `expo-location` allows reading geolocation information from the device.
+
+### Google Maps Static API
+
+https://developers.google.com/maps/documentation/maps-static/overview
+
+- The Maps Static API lets you embed a Google Maps image on your web page without requiring
+  JavaScript or any dynamic page loading.
+
+- The Maps Static API service creates your map based on URL parameters sent through a standard HTTP
+  request and returns the map as an image you can display on your web page.
 
 ### Difference between ScrollView and FlatList
 
