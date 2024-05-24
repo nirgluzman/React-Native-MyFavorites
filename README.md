@@ -76,6 +76,13 @@ https://docs.expo.dev/versions/latest/sdk/location/
 
 - `expo-location` allows reading geolocation information from the device.
 
+### Expo MapView
+
+https://docs.expo.dev/versions/latest/sdk/map-view/
+
+- A library that provides a Map component that uses Google Maps on Android and Apple Maps or Google
+  Maps on iOS.
+
 ### Google Maps Static API
 
 https://developers.google.com/maps/documentation/maps-static/overview
