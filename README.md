@@ -67,6 +67,15 @@ https://docs.expo.dev/versions/latest/sdk/imagepicker/
   the camera. We need to add these permissions to `app.json`.
   https://docs.expo.dev/versions/latest/sdk/imagepicker/#configuration-in-appjsonappconfigjs
 
+### Expo Location
+
+https://docs.expo.dev/versions/latest/sdk/location/
+
+- A library that provides access to reading geolocation information, polling current location or
+  subscribing location update events from the device.
+
+- `expo-location` allows reading geolocation information from the device.
+
 ### Difference between ScrollView and FlatList
 
 https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
