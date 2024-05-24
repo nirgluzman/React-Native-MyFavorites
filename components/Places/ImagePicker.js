@@ -2,13 +2,15 @@
 // https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
 import { useState } from 'react';
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 
 import {
   launchCameraAsync, // display the system UI for taking a photo with the camera.
   useCameraPermissions, // check if the user has granted permission to use the camera.
   PermissionStatus // enum of possible permission statuses, returned by useCameraPermissions(); see https://docs.expo.dev/versions/latest/sdk/imagepicker/#permissionstatus
 } from 'expo-image-picker';
+
+import OutlinedButton from '../UI/OutlinedButton.js';
 
 import { Colors } from '../../constants/colors'; // color palette
 
@@ -72,7 +74,9 @@ export default function ImagePicker() {
   return (
     <View>
       <View style={styles.imagePreview}>{imagePreview}</View>
-      <Button title='Take Image' onPress={takeImageHandler} />
+      <OutlinedButton icon='camera' onPress={takeImageHandler}>
+        Take Image
+      </OutlinedButton>
     </View>
   );
 }
