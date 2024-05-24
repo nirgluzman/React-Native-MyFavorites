@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // hook to have an access to 'navigation' object.
 
 import {
   getCurrentPositionAsync, // requests for one-time delivery of the user's current location.
@@ -16,8 +17,9 @@ import { Colors } from '../../constants/colors'; // color palette
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState(null);
-
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
+
+  const navigation = useNavigation();
 
   async function verifyPermissions() {
     if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
@@ -62,7 +64,9 @@ export default function LocationPicker() {
   }
 
   // allow the user to pick a location on the map.
-  function pickOnMapHandler() {}
+  function pickOnMapHandler() {
+    navigation.navigate('Map');
+  }
 
   let locationPreview = <Text>No location picked yet</Text>;
 
