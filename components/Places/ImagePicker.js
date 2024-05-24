@@ -1,7 +1,8 @@
 // ImagePicker provides access to the system's UI for selecting images and videos from the phone's library or taking a photo with the camera.
 // https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
-import { Alert, Button, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
 
 import {
   launchCameraAsync, // display the system UI for taking a photo with the camera.
@@ -9,7 +10,11 @@ import {
   PermissionStatus // enum of possible permission statuses, returned by useCameraPermissions(); see https://docs.expo.dev/versions/latest/sdk/imagepicker/#permissionstatus
 } from 'expo-image-picker';
 
+import { Colors } from '../../constants/colors'; // color palette
+
 export default function ImagePicker() {
+  const [pickedImage, setPickedImage] = useState(null);
+
   const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
   async function verifyPermissions() {
@@ -48,13 +53,43 @@ export default function ImagePicker() {
       quality: 0.5 // specify the quality of compression, from 0 to 1; we want to limit the quality/image size.
     });
 
-    console.log(image);
+    // store the image uri in state.
+    setPickedImage(image.assets[0].uri);
+  }
+
+  // image preview - if no image is picked, display a message.
+  let imagePreview = <Text>No image picked yet</Text>;
+
+  if (pickedImage) {
+    imagePreview = (
+      <Image
+        style={styles.image} // we must set width & height in order to show the image.
+        source={{ uri: pickedImage }} // image source (either a remote URL or a local file resource).
+      />
+    );
   }
 
   return (
     <View>
-      <View></View>
+      <View style={styles.imagePreview}>{imagePreview}</View>
       <Button title='Take Image' onPress={takeImageHandler} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    marginVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary100,
+    borderRadius: 4
+  },
+
+  image: {
+    width: '100%',
+    height: '100%'
+  }
+});
