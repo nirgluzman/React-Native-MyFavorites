@@ -93,7 +93,20 @@ https://developers.google.com/maps/documentation/maps-static/overview
 - The Maps Static API service creates your map based on URL parameters sent through a standard HTTP
   request and returns the map as an image you can display on your web page.
 
-### Difference between ScrollView and FlatList
+### Google Maps Geocoding API
+
+https://developers.google.com/maps/documentation/geocoding/overview
+
+- The Geocoding API is a service that accepts a place as an address, latitude and longitude
+  coordinates, or Place ID. It then converts the address into latitude and longitude coordinates and
+  a Place ID, or converts latitude and longitude coordinates or a Place ID into an address.
+
+- `Geocoding`: converts addresses into latitude and longitude coordinates or Place IDs.
+
+- `Reverse geocoding`: converts latitude/longitude coordinates or a Place ID into a human-readable
+  address.
+
+### React Native - difference between ScrollView and FlatList
 
 https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
 
