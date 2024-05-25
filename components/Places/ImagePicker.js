@@ -17,7 +17,7 @@ import { Colors } from '../../constants/colors'; // color palette
 export default function ImagePicker() {
   const [pickedImage, setPickedImage] = useState(null);
 
-  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
+  const [cameraPermissionInformation, requestPermission] = useCameraPermissions(); // executed only once when the component mounts.
 
   async function verifyPermissions() {
     if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
@@ -25,14 +25,18 @@ export default function ImagePicker() {
       const permissionResponse = await requestPermission();
 
       // return the granted permission status by the User.
-      return permissionResponse.granted;
+      return permissionResponse.granted; // granted = boolean that indicates if the permission is granted.
     }
 
     if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
       // User has denied the permission.
       Alert.alert(
         'Insufficient permissions!',
-        'You need to grant camera permissions to use this app.'
+        'You need to grant camera permissions to use this app.',
+        [
+          // array of buttons to display.
+          { onPress: async () => await requestPermission() }
+        ]
       );
       return false;
     }

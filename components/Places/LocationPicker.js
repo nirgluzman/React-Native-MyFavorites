@@ -34,7 +34,11 @@ export default function LocationPicker() {
       // User has denied the permission.
       Alert.alert(
         'Insufficient permissions!',
-        'You need to grant location permissions to use this app.'
+        'You need to grant location permissions to use this app.',
+        [
+          // array of buttons to display.
+          { onPress: async () => await requestPermission() }
+        ]
       );
       return false;
     }
