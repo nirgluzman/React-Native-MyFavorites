@@ -15,7 +15,10 @@ import {
 
 import OutlinedButton from '../UI/OutlinedButton';
 
-import { getMapPreview } from '../../util/location'; // helper function to generate a URL for a static Google Maps image
+import {
+  getMapPreview, // helper function to generate a URL for a static Google Maps image.
+  getAddress // helper function for reverse geocoding (translating a location on the map into a human-readable address).
+} from '../../util/location';
 
 import { Colors } from '../../constants/colors'; // color palette
 
@@ -105,7 +108,13 @@ export default function LocationPicker({ onPickLocation }) {
 
   // pass the picked location to PlaceForm (parent component).
   useEffect(() => {
-    onPickLocation(pickedLocation);
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAddress(pickedLocation.lat, pickedLocation.lng);
+        onPickLocation({ ...pickedLocation, address });
+      }
+    }
+    handleLocation();
   }, [pickedLocation, onPickLocation]);
 
   return (
