@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // hook to have an access to 'navigation' object.
+import {
+  useNavigation, // get access to 'navigation' object.
+  useRoute, // get access to 'route' object (i.e. route parameters).
+  useIsFocused // check if the current screen is focused.
+} from '@react-navigation/native';
 
 import {
   getCurrentPositionAsync, // requests for one-time delivery of the user's current location.
@@ -17,9 +21,25 @@ import { Colors } from '../../constants/colors'; // color palette
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState(null);
+
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 
+  const isFocused = useIsFocused(); // this hook returns a boolean indicating whether the screen is currently focused or not.
+
   const navigation = useNavigation();
+  const route = useRoute();
+
+  // update map preview when the picked location changes.
+  useEffect(() => {
+    // get the picked location from the route parameters.
+    if (isFocused && route.params) {
+      const mapPickedLocation = {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng
+      };
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   async function verifyPermissions() {
     if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
