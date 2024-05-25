@@ -14,7 +14,7 @@ import OutlinedButton from '../UI/OutlinedButton.js';
 
 import { Colors } from '../../constants/colors'; // color palette
 
-export default function ImagePicker() {
+export default function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState(null);
 
   const [cameraPermissionInformation, requestPermission] = useCameraPermissions(); // executed only once when the component mounts.
@@ -59,8 +59,8 @@ export default function ImagePicker() {
       quality: 0.5 // specify the quality of compression, from 0 to 1; we want to limit the quality/image size.
     });
 
-    // store the image uri in state.
-    setPickedImage(image.assets[0].uri);
+    setPickedImage(image.assets[0].uri); // store the image uri in state for preview purposes.
+    onTakeImage(image.assets[0].uri); // pass the image uri to PlaceForm (parent component).
   }
 
   // image preview - if no image is picked, display a message.

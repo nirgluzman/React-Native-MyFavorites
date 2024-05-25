@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import ImagePicker from './ImagePicker';
@@ -20,11 +20,16 @@ export default function PlaceForm() {
     setSelectedImage(imageUri);
   }
 
-  function pickLocationHandler(location) {
-    setPickedLocation(location);
-  }
+  // useCallback will return a memoized version of the callback that only changes if one of the inputs has changed.
+  // this is to prevent unnecessary re-creation of the callback function on every re-render.
+  // with an empty dependency array ([]), pickLocationHandler will be created only once, even if the component itself re-renders due to other state or prop changes.
+  // by memoizing pickLocationHandler with useCallback and an empty dependency array, we ensure that child component (LocationPicker) that receive it as a prop will
+  // only re-render if pickedLocation itself changes, not due to a new function reference - see useEffect block.
+  const pickLocationHandler = useCallback(location => setPickedLocation(location), []);
 
-  function savePlaceHandler() {}
+  function savePlaceHandler() {
+    console.log(enteredTitle, selectedImage, pickedLocation);
+  }
 
   return (
     <ScrollView style={styles.form}>

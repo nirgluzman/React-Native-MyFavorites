@@ -19,7 +19,7 @@ import { getMapPreview } from '../../util/location'; // helper function to gener
 
 import { Colors } from '../../constants/colors'; // color palette
 
-export default function LocationPicker() {
+export default function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState(null);
 
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
@@ -102,6 +102,11 @@ export default function LocationPicker() {
       />
     );
   }
+
+  // pass the picked location to PlaceForm (parent component).
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation, onPickLocation]);
 
   return (
     <View>
