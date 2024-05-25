@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { useState, useLayoutEffect, useCallback } from 'react';
+import { Alert, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; // library that provides a Map component that uses Google Maps on Android and Apple Maps or Google Maps on iOS.
 
-export default function Map() {
+import IconButton from '../components/UI/IconButton';
+
+export default function Map({ navigation }) {
   const [selectedLocation, setSelectedLocation] = useState();
 
   const region = {
@@ -21,6 +23,35 @@ export default function Map() {
     const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({ lat, lng });
   }
+
+  // useCallback for optimized performance: prevents unnecessary re-renders.
+  // Memoizes a callback function: ensures it only re-evaluates when dependencies change.
+  const savePickedLoactionHandler = useCallback(() => {
+    if (!selectedLocation) {
+      Alert.alert(
+        'No location picked!',
+        'You have to pick a location (by tapping on the map) first!'
+      );
+      return;
+    }
+
+    // navigate to the AddPlace screen and pass the picked location as a parameter.
+    navigation.navigate('AddPlace', {
+      pickedLat: selectedLocation.lat,
+      pickedLng: selectedLocation.lng
+    });
+  }, [navigation, selectedLocation]);
+
+  // the code inside useLayoutEffect is processed before the component is displayed.
+  useLayoutEffect(
+    () =>
+      navigation.setOptions({
+        headerRight: ({ tintColor }) => (
+          <IconButton icon='save' size={24} color={tintColor} onPress={savePickedLoactionHandler} />
+        )
+      }),
+    [navigation, savePickedLoactionHandler]
+  );
 
   return (
     <MapView
