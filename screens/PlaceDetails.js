@@ -1,26 +1,49 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import OutlinedButton from '../components/UI/OutlinedButton';
 
+// helper functions to work with SQLite
+import { fetchPlace } from '../util/database';
+
 import { Colors } from '../constants/colors'; // color palette
 
-export default function PlaceDetails({ route }) {
+export default function PlaceDetails({ route, navigation }) {
+  const [fetchedPlace, setFetchedPlace] = useState();
+
   function showOnMapHandler() {}
 
   // fetch place details for a specific placeId when the screen loads.
   const selectedPlaceId = route.params.placeId;
-
   useEffect(() => {
-    // use selectedPlaceId to fetch data from SQLite for a single place.
+    async function loadPlaceData() {
+      const place = await fetchPlace(selectedPlaceId);
+      setFetchedPlace(place);
+
+      // set the title of the screen to place.title.
+      navigation.setOptions({
+        title: place.title
+      });
+    }
+
+    loadPlaceData();
   }, [selectedPlaceId]);
+
+  // if there is no place data, show a fallback message.
+  if (!fetchedPlace) {
+    return (
+      <View style={styles.fallback}>
+        <Text style={styles.fallbackText}>Loading place data ...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
-      <Image style={styles.image} />
+      <Image style={styles.image} source={{ uri: fetchedPlace.imageUri }} />
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
-          <Text style={styles.address}></Text>
+          <Text style={styles.address}>{fetchedPlace.address}</Text>
         </View>
         <OutlinedButton icon='map' onPress={showOnMapHandler}>
           View on Map
@@ -31,6 +54,17 @@ export default function PlaceDetails({ route }) {
 }
 
 const styles = StyleSheet.create({
+  fallback: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  fallbackText: {
+    fontSize: 16,
+    color: Colors.primary200
+  },
+
   image: {
     height: '35%',
     minHeight: 300,
