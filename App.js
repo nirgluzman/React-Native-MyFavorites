@@ -13,7 +13,7 @@ import Map from './screens/Map';
 import IconButton from './components/UI/IconButton';
 
 // helper functions to work with SQLite
-import { openDB, initDB } from './util/database';
+import { initDB } from './util/database';
 
 import { Colors } from './constants/colors'; // color palette
 
@@ -30,8 +30,7 @@ export default function App() {
   useEffect(() => {
     async function init() {
       try {
-        const db = await openDB();
-        await initDB(db);
+        await initDB();
         setDbInitialized(true); // Database initialized successfully.
       } catch (err) {
         console.log(err);
