@@ -28,7 +28,12 @@ export async function insertPlace(place) {
   return result.lastInsertRowId; // return the id of the inserted place.
 }
 
-// get all places from the database.
+// fetch all places from the database.
 export async function fetchPlaces() {
   return await db.getAllAsync(`SELECT * FROM places`);
+}
+
+// fetch a single place from the database.
+export async function fetchPlace(id) {
+  return await db.getFirstAsync(`SELECT * FROM places WHERE id = ?`, [id]);
 }
