@@ -90,7 +90,7 @@ export default function App() {
             name='PlaceDetails'
             component={PlaceDetails}
             options={{
-              title: 'Place Details'
+              title: 'Loading Place ...' // title displayed until place details are fetched from SQLite (see PlaceDetails screen).
             }}
           />
         </Stack.Navigator>
