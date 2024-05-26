@@ -47,6 +47,15 @@ https://docs.expo.dev/guides/environment-variables/
 - Do not store sensitive info, such as private keys, in `EXPO_PUBLIC_` variables. These variables
   will be visible in plain-text in your compiled application.
 
+### Expo SQLite
+
+https://docs.expo.dev/versions/latest/sdk/sqlite/
+
+- `expo-sqlite` gives your app access to an ON-DEVICE database that can be queried through a SQLite
+  API.
+
+- The database is persisted across restarts of your app.
+
 ### Expo Camera -> comprehensive camera manegement package
 
 https://docs.expo.dev/versions/latest/sdk/camera/
