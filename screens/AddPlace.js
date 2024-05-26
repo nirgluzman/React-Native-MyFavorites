@@ -1,11 +1,16 @@
 import PlaceForm from '../components/Places/PlaceForm';
 
+// helper functions to work with SQLite
+import { insertPlace } from '../util/database';
+
 export default function AddPlace({ navigation }) {
-  function createPlaceHandler(place) {
-    // navigate to 'AllPlaces' screen and pass the 'place' as a route params.
-    navigation.navigate('AllPlaces', {
-      place
-    });
+  async function createPlaceHandler(place) {
+    // insert the place into the database.
+    await insertPlace(place);
+
+    // navigate to 'AllPlaces' screen.
+    navigation.navigate('AllPlaces');
   }
+
   return <PlaceForm onCreatePlace={createPlaceHandler} />;
 }
