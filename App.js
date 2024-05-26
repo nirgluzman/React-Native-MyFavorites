@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { NavigationContainer } from '@react-navigation/native'; // React Navigator wrapper
@@ -13,7 +13,7 @@ import Map from './screens/Map';
 import IconButton from './components/UI/IconButton';
 
 // helper functions to work with SQLite
-import { initDB } from './util/database';
+import { openDB, initDB } from './util/database';
 
 import { Colors } from './constants/colors'; // color palette
 
@@ -30,8 +30,9 @@ export default function App() {
   useEffect(() => {
     async function init() {
       try {
-        await initDB();
-        setDbInitialized(true); // DB initialized successfully.
+        const db = await openDB();
+        await initDB(db);
+        setDbInitialized(true); // Database initialized successfully.
       } catch (err) {
         console.log(err);
       }
