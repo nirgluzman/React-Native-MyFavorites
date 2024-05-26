@@ -115,6 +115,15 @@ https://developers.google.com/maps/documentation/geocoding/overview
 - `Reverse geocoding`: converts latitude/longitude coordinates or a Place ID into a human-readable
   address.
 
+### Expo SplashScreen
+
+https://docs.expo.dev/versions/latest/sdk/splash-screen/
+
+- Library to tell the splash screen to remain visible until it has been explicitly told to hide.
+
+- This is useful to do tasks that will happen behind the scenes such as making API calls,
+  pre-loading fonts, animating the splash screen and so on.
+
 ### React Native - difference between ScrollView and FlatList
 
 https://pankajhasmukh2014.medium.com/difference-between-scrollview-and-flatlist-react-native-20a2e49238f9
