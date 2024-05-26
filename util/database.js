@@ -3,12 +3,10 @@
 import * as SQLite from 'expo-sqlite';
 
 // open a database.
-export async function openDB() {
-  return await SQLite.openDatabaseAsync('places.db');
-}
+const db = SQLite.openDatabaseSync('places.db');
 
 // initialize the database.
-export async function initDB(db) {
+export async function initDB() {
   return await db.execAsync(
     `CREATE TABLE IF NOT EXISTS places (
       id INTEGER PRIMARY KEY NOT NULL,
@@ -19,4 +17,18 @@ export async function initDB(db) {
       lng REAL NOT NULL
     )`
   );
+}
+
+// insert a place into the database.
+export async function insertPlace(place) {
+  const result = await db.runAsync(
+    `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
+    [place.title, place.imageUri, place.address, place.location.lat, place.location.lng]
+  );
+  return result.lastInsertRowId; // return the id of the inserted place.
+}
+
+// get all places from the database.
+export async function fetchPlaces() {
+  return await db.getAllAsync(`SELECT * FROM places`);
 }
