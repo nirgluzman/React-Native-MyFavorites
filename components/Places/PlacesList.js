@@ -15,6 +15,7 @@ export default function PlacesList({ places }) {
 
   return (
     <FlatList
+      style={styles.list}
       data={places} // array (or array-like list) of items to render.
       keyExtractor={item => item.id} // Used to extract a unique key for a given item at the specified index.
       renderItem={({ item }) => <PlaceItem place={item} />} // function responsible for rendering each individual item in the list.
@@ -23,6 +24,10 @@ export default function PlacesList({ places }) {
 }
 
 const styles = StyleSheet.create({
+  list: {
+    margin: 24
+  },
+
   fallbackContainer: {
     flex: 1, // takes up the entire screen
     justifyContent: 'center',
