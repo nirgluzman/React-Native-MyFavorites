@@ -1,10 +1,21 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import {
+  useNavigation // get access to 'navigation' object.
+} from '@react-navigation/native';
+
 import PlaceItem from './PlaceItem.js';
 
 import { Colors } from '../../constants/colors'; // color palette
 
 export default function PlacesList({ places }) {
+  const navigation = useNavigation();
+
+  // navigate to 'PlaceDetails' screen when a place is selected.
+  function selectPlaceHandler(id) {
+    navigation.navigate('PlaceDetails', { placeId: id });
+  }
+
   if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
@@ -18,7 +29,7 @@ export default function PlacesList({ places }) {
       style={styles.list}
       data={places} // array (or array-like list) of items to render.
       keyExtractor={item => item.id} // Used to extract a unique key for a given item at the specified index.
-      renderItem={({ item }) => <PlaceItem place={item} />} // function responsible for rendering each individual item in the list.
+      renderItem={({ item }) => <PlaceItem place={item} onSelect={selectPlaceHandler} />} // function responsible for rendering each individual item in the list.
     />
   );
 }
