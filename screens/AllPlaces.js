@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 
-import PlacesList from '../components/Places/PlacesList.js';
+import PlacesList from '../components/Places/PlacesList';
 
-export default function AllPlaces({ route }) {
+// helper functions to work with SQLite
+import { fetchPlaces } from '../util/database';
+
+export default function AllPlaces() {
   const [loadedPlaces, setLoadedPlaces] = useState([]);
 
   const isFocused = useIsFocused(); // check if the screen is focused
 
   useEffect(() => {
-    if (isFocused && route.params) {
-      // check if the screen is focused and there are params
-      const { place } = route.params;
-      setLoadedPlaces(currentPlaces => [place, ...currentPlaces]);
+    async function loadPlaces() {
+      const places = await fetchPlaces();
+      setLoadedPlaces(places);
     }
-  }, [isFocused, route]);
+
+    // check if the screen is focused
+    if (isFocused) {
+      loadPlaces();
+    }
+  }, [isFocused]);
 
   return <PlacesList places={loadedPlaces} />;
 }
