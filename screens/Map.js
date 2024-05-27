@@ -69,7 +69,7 @@ export default function Map({ route, navigation }) {
     // set the headerRight button to the 'save' icon.
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
-        <IconButton icon='save' size={24} color={tintColor} onPress={savePickedLoactionHandler} />
+        <IconButton icon='save' size={24} color={tintColor} onPress={savePickedLocationHandler} />
       )
     });
   }, [navigation, savePickedLocationHandler, previousRouteName]);
