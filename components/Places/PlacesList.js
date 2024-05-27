@@ -6,9 +6,11 @@ import {
 
 import PlaceItem from './PlaceItem.js';
 
-import { Colors } from '../../constants/colors'; // color palette
+import { deletePlace } from '../../util/database'; // helper functions to work with SQLite.
 
-export default function PlacesList({ places }) {
+import { Colors } from '../../constants/colors'; // color palette.
+
+export default function PlacesList({ places, onPlaceUpdate }) {
   const navigation = useNavigation();
 
   // navigate to 'PlaceDetails' screen when a place is selected.
@@ -24,12 +26,20 @@ export default function PlacesList({ places }) {
     );
   }
 
+  async function deletePlaceHandler(id) {
+    onPlaceUpdate(false);
+    await deletePlace(id);
+    onPlaceUpdate(true);
+  }
+
   return (
     <FlatList
       style={styles.list}
       data={places} // array (or array-like list) of items to render.
       keyExtractor={item => item.id} // Used to extract a unique key for a given item at the specified index.
-      renderItem={({ item }) => <PlaceItem place={item} onSelect={selectPlaceHandler} />} // function responsible for rendering each individual item in the list.
+      renderItem={(
+        { item } // function responsible for rendering each individual item in the list.
+      ) => <PlaceItem place={item} onSelect={selectPlaceHandler} onDelete={deletePlaceHandler} />}
     />
   );
 }

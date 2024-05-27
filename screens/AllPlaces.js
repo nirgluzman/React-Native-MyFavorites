@@ -8,6 +8,7 @@ import { fetchPlaces } from '../util/database';
 
 export default function AllPlaces() {
   const [loadedPlaces, setLoadedPlaces] = useState([]);
+  const [updatePlace, setUpdatePlace] = useState(false);
 
   const isFocused = useIsFocused(); // check if the screen is focused
 
@@ -21,7 +22,7 @@ export default function AllPlaces() {
     if (isFocused) {
       loadPlaces();
     }
-  }, [isFocused]);
+  }, [isFocused, updatePlace]);
 
-  return <PlacesList places={loadedPlaces} />;
+  return <PlacesList places={loadedPlaces} onPlaceUpdate={setUpdatePlace} />;
 }
