@@ -4,13 +4,24 @@ import MapView, { Marker } from 'react-native-maps'; // library that provides a 
 
 import IconButton from '../components/UI/IconButton';
 
-export default function Map({ navigation }) {
-  const [selectedLocation, setSelectedLocation] = useState();
+export default function Map({ route, navigation }) {
+  // get the previous route name.
+  const routes = navigation.getState()?.routes;
+  const previousRoute = routes[routes.length - 2];
+  const previousRouteName = previousRoute.name;
+
+  // route params hold the initial location coordinates.
+  const initialLocation = {
+    lat: route.params.initialLat,
+    lng: route.params.initialLng
+  };
+
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
 
   const region = {
     // define the center of the map.
-    latitude: 37.78,
-    longitude: -122.43,
+    latitude: initialLocation.lat,
+    longitude: initialLocation.lng,
     // Delta = size of the map - how much content beside the center will be visible (i.e. zoom level)
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421
@@ -18,6 +29,11 @@ export default function Map({ navigation }) {
 
   // event handler that is called when the user clicks on the map.
   function selectLocationHandler(event) {
+    // if the previous route is PlaceDetails, then we want to disable the click option.
+    if (previousRouteName === 'PlaceDetails') {
+      return null;
+    }
+
     // coordinates of the selected location.
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
@@ -26,7 +42,7 @@ export default function Map({ navigation }) {
 
   // useCallback for optimized performance: prevents unnecessary re-renders.
   // Memoizes a callback function: ensures it only re-evaluates when dependencies change.
-  const savePickedLoactionHandler = useCallback(() => {
+  const savePickedLocationHandler = useCallback(() => {
     if (!selectedLocation) {
       Alert.alert(
         'No location picked!',
@@ -42,16 +58,21 @@ export default function Map({ navigation }) {
     });
   }, [navigation, selectedLocation]);
 
-  // the code inside useLayoutEffect is processed before the component is displayed.
-  useLayoutEffect(
-    () =>
-      navigation.setOptions({
-        headerRight: ({ tintColor }) => (
-          <IconButton icon='save' size={24} color={tintColor} onPress={savePickedLoactionHandler} />
-        )
-      }),
-    [navigation, savePickedLoactionHandler]
-  );
+  // the code inside useLayoutEffect is processed before the component is displayed;
+  // fires before the browser repaints the screen.
+  useLayoutEffect(() => {
+    // if the previous route is PlaceDetails, then we do not need to display the 'save' button.
+    if (previousRouteName === 'PlaceDetails') {
+      return;
+    }
+
+    // set the headerRight button to the 'save' icon.
+    navigation.setOptions({
+      headerRight: ({ tintColor }) => (
+        <IconButton icon='save' size={24} color={tintColor} onPress={savePickedLoactionHandler} />
+      )
+    });
+  }, [navigation, savePickedLocationHandler, previousRouteName]);
 
   return (
     <MapView

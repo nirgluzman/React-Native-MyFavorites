@@ -11,7 +11,12 @@ import { Colors } from '../constants/colors'; // color palette
 export default function PlaceDetails({ route, navigation }) {
   const [fetchedPlace, setFetchedPlace] = useState();
 
-  function showOnMapHandler() {}
+  function showOnMapHandler() {
+    navigation.navigate('Map', {
+      initialLat: fetchedPlace.lat,
+      initialLng: fetchedPlace.lng
+    });
+  }
 
   // fetch place details for a specific placeId when the screen loads.
   const selectedPlaceId = route.params.placeId;
