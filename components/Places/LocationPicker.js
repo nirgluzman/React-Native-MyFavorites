@@ -70,8 +70,8 @@ export default function LocationPicker({ onPickLocation }) {
     return true;
   }
 
-  // locating the user using the phone GPS.
-  async function getLocationHandler() {
+  // locating the user using the device GPS.
+  async function getDeviceLocation() {
     // check if the user has granted permission.
     const hasPermission = await verifyPermissions();
 
@@ -80,9 +80,16 @@ export default function LocationPicker({ onPickLocation }) {
       return;
     }
 
-    const location = await getCurrentPositionAsync({
+    const deviceLocation = await getCurrentPositionAsync({
       accuracy: Accuracy.Highest // the accuracy of the location, https://docs.expo.dev/versions/latest/sdk/location/#accuracy
     });
+
+    return deviceLocation;
+  }
+
+  async function getLocationHandler() {
+    // get the device location.
+    const location = await getDeviceLocation();
 
     setPickedLocation({
       lat: location.coords.latitude, // latitude
@@ -91,8 +98,14 @@ export default function LocationPicker({ onPickLocation }) {
   }
 
   // allow the user to pick a location on the map.
-  function pickOnMapHandler() {
-    navigation.navigate('Map');
+  async function pickOnMapHandler() {
+    // get the device location.
+    const location = await getDeviceLocation();
+
+    navigation.navigate('Map', {
+      initialLat: location.coords.latitude,
+      initialLng: location.coords.longitude
+    });
   }
 
   let locationPreview = <Text>No location picked yet</Text>;
