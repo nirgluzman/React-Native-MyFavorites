@@ -47,9 +47,15 @@ https://docs.expo.dev/guides/environment-variables/
 - Do not store sensitive info, such as private keys, in `EXPO_PUBLIC_` variables. These variables
   will be visible in plain-text in your compiled application.
 
+### Gesture Handler
+
+https://docs.swmansion.com/react-native-gesture-handler/docs/
+https://blog.logrocket.com/react-native-gesture-handler-swipe-long-press-and-more/
+
 ### Expo SQLite
 
 https://docs.expo.dev/versions/latest/sdk/sqlite/
+https://blog.logrocket.com/using-sqlite-react-native/
 
 - `expo-sqlite` gives your app access to an ON-DEVICE database that can be queried through a SQLite
   API.
