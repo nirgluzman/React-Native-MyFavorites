@@ -37,3 +37,8 @@ export async function fetchPlaces() {
 export async function fetchPlace(id) {
   return await db.getFirstAsync(`SELECT * FROM places WHERE id = ?`, [id]);
 }
+
+// delete a place from the database.
+export async function deletePlace(id) {
+  return await db.runAsync(`DELETE FROM places WHERE id = ?`, [id]);
+}
